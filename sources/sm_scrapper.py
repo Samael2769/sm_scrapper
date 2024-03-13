@@ -7,6 +7,7 @@
 
 from pywinauto.application import Application
 import time
+import sys
 
 def sm_scrapper():
     app = Application(backend="uia").start(r"D:\Games\Steam\steam.exe")
@@ -20,3 +21,17 @@ def sm_scrapper():
     library_dlg = main_dlg.child_window(title="LIBRARY")
     library_dlg.set_focus()
     library_dlg.click_input()
+    game = sys.argv[1]
+    search_dlg = main_dlg.child_window(title="Search by Name")
+    search_dlg.set_focus()
+    search_dlg.type_keys(game)
+    time.sleep(2)
+    game_dlg = main_dlg.child_window(title=game, control_type="Text", found_index=0)
+    game_dlg.set_focus()
+    game_dlg.click_input()
+    time.sleep(2)
+    #print (main_dlg.print_control_identifiers())
+    play_dlg = main_dlg.child_window(title="PLAY", found_index=3)
+
+    play_dlg.set_focus()
+    play_dlg.click_input()
